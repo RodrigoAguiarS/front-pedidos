@@ -1,0 +1,72 @@
+<nz-layout class="fixed-layout">
+  <nz-header class="header">
+    <app-header></app-header>
+  </nz-header>
+  <nz-layout>
+    <nz-sider
+      nzWidth="250px"
+      [nzCollapsedWidth]="80"
+      [(nzCollapsed)]="isCollapsed"
+      nzCollapsible
+    >
+      <ul nz-menu nzTheme="dark" nzMode="inline">
+        <li
+          *ngIf="roles.includes('USUARIO') || roles.includes('Adminstrador')"
+          nz-menu-item
+          routerLink="/home"
+        >
+          <i nz-icon nzType="team"></i>
+          <span>Home</span>
+        </li>
+
+        <!-- Submenu Usuário -->
+        <li
+          *ngIf="roles.includes('Adminstrador')"
+          nz-submenu
+          nzTitle="Usuário"
+          nzIcon="user"
+        >
+          <ul>
+            <li nz-menu-item routerLink="/usuario/cadastrar">
+              <i nz-icon nzType="plus"></i>
+              <span>Cadastrar</span>
+            </li>
+            <li nz-menu-item routerLink="/usuario/listar">
+              <i nz-icon nzType="unordered-list"></i>
+              <span>Listar</span>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Submenu Perfil -->
+        <li
+          *ngIf="roles.includes('Adminstrador')"
+          nz-submenu
+          nzTitle="Perfil"
+          nzIcon="user"
+        >
+          <ul>
+            <li nz-menu-item routerLink="/perfil/create">
+              <i nz-icon nzType="plus"></i>
+              <span>Cadastrar</span>
+            </li>
+            <li nz-menu-item routerLink="/perfil/listar">
+              <i nz-icon nzType="unordered-list"></i>
+              <span>Listar</span>
+            </li>
+          </ul>
+        </li>
+        <li nz-menu-item (click)="logout()" (keydown)="onKeyDown($event)">
+          <i nz-icon nzType="logout"></i>
+          <span>Sair</span>
+        </li>
+      </ul>
+    </nz-sider>
+
+    <nz-content>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

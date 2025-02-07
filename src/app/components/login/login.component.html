@@ -1,0 +1,42 @@
+<div class="container">
+  <form nz-form [formGroup]="form" (ngSubmit)="logar()">
+    <!-- email -->
+    <div class="login-image">
+      <img src="login.svg" alt="Login" />
+    </div>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">E-mail</nz-form-label>
+      <nz-form-control nzErrorTip="Por favor insira o login" [nzSpan]="24">
+        <input
+          nz-input
+          type="text"
+          formControlName="email"
+          nzRequired
+          placeholder="Ex. fulano@mail.com"
+          autocomplete="email"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- senha -->
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">Senha</nz-form-label>
+      <nz-form-control nzErrorTip="Por favor insira a senha" [nzSpan]="24">
+        <input
+          nzPrefixIcon="lock"
+          nz-input
+          type="password"
+          nzRequired
+          formControlName="senha"
+          placeholder="Ex. 123"
+          autocomplete="current-password"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- botão de login -->
+    <button nz-button nzType="primary" [disabled]="!validaCampos()">
+      Login
+    </button>
+  </form>
+</div>

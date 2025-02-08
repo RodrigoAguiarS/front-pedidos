@@ -46,9 +46,6 @@ export class UsuarioService {
       url += `&perfilId=${params.perfilId}`;
     }
 
-    console.log('URL construída:', url);
-    console.log('Parâmetros:', params);
-
     return this.http.get<{ content: Usuario[]; totalElements: number }>(url);
   }
 

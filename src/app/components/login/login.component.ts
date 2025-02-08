@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Credenciais } from '../../model/Credenciais';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -16,13 +21,12 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     ReactiveFormsModule,
     NzFormModule,
     NzInputModule,
-    NzButtonModule
+    NzButtonModule,
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
-
   form: FormGroup = new FormGroup({});
   credenciais: Credenciais = new Credenciais();
 
@@ -48,16 +52,13 @@ export class LoginComponent {
       this.credenciais = this.form.value;
       this.authservice.authenticate(this.credenciais).subscribe({
         next: (resposta) => {
-          console.log('Resposta recebida:', resposta); // Adicione este log para verificar a resposta
           const token = resposta.headers.get('Authorization')?.substring(7) ?? '';
-          console.log('Token recebido:', token); // Adicione este log para verificar o token recebido
           this.authservice.successfulLogin(token);
           this.message.success('Login efetuado com sucesso!');
           this.router.navigate(['home']);
         },
         error: (error) => {
           const errorMessage = JSON.parse(error.error).message;
-          console.log('Erro ao fazer login:', errorMessage); // Adicione este log para verificar o erro
           this.message.error(errorMessage);
         },
       });
@@ -68,4 +69,3 @@ export class LoginComponent {
     return this.form.valid;
   }
 }
-

@@ -1,0 +1,94 @@
+/* Container principal */
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Estilo para a div de busca */
+.search-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Estilo para os campos de entrada */
+.search-filters input[nz-input] {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+/* Estilo para o select de perfis */
+.search-filters nz-select {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+/* Estilo para o botão de busca */
+.search-filters button {
+  flex: 0 0 auto;
+}
+
+/* Estilo para o título da lista */
+h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Estilo para a tabela */
+nz-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Estilo para o cabeçalho da tabela */
+nz-table thead th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  text-align: left;
+  padding: 12px;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Estilo para as células da tabela */
+nz-table tbody td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Estilo para as ações na tabela */
+nz-table tbody td a {
+  margin-right: 8px;
+  color: #1890ff;
+}
+
+nz-table tbody td a:hover {
+  color: #40a9ff;
+}
+
+/* Estilo para o ícone de edição */
+nz-table tbody td a i[nz-icon] {
+  font-size: 18px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .search-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-filters input[nz-input],
+  .search-filters nz-select {
+    max-width: 100%;
+  }
+
+  .search-filters button {
+    width: 100%;
+  }
+}

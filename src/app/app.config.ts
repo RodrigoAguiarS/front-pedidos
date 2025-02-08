@@ -1,29 +1,29 @@
-import { LOCALE_ID, ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideZoneChangeDetection,
+  importProvidersFrom,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { en_US, provideNzI18n, NZ_I18N, pt_BR } from 'ng-zorro-antd/i18n';
+import { provideNzI18n, pt_BR } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
-import en from '@angular/common/locales/en';
 import pt from '@angular/common/locales/pt';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { tokenInterceptor } from './interceptors/token.interceptor';
+import { provideNgxMask } from 'ngx-mask';
 
-registerLocaleData(en);
 registerLocaleData(pt);
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideNgxMask(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideNzI18n(en_US),
     importProvidersFrom(FormsModule),
     provideAnimationsAsync(),
+    provideNzI18n(pt_BR),
     provideHttpClient(withInterceptors([tokenInterceptor])),
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: LOCALE_ID, useValue: 'pt-BR' },
-    { provide: NZ_I18N, useValue: pt_BR }
-  ]
+  ],
 };

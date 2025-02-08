@@ -6,32 +6,29 @@
     </div>
     <nz-form-item>
       <nz-form-label [nzSpan]="24">E-mail</nz-form-label>
-      <nz-form-control nzErrorTip="Por favor insira o login" [nzSpan]="24">
-        <input
-          nz-input
-          type="text"
-          formControlName="email"
-          nzRequired
-          placeholder="Ex. fulano@mail.com"
-          autocomplete="email"
-        />
-      </nz-form-control>
+
+      <input
+        nz-input
+        type="text"
+        formControlName="email"
+        nzRequired
+        placeholder="Ex. fulano@mail.com"
+        autocomplete="email"
+      />
     </nz-form-item>
 
     <!-- senha -->
     <nz-form-item>
       <nz-form-label [nzSpan]="24">Senha</nz-form-label>
-      <nz-form-control nzErrorTip="Por favor insira a senha" [nzSpan]="24">
-        <input
-          nzPrefixIcon="lock"
-          nz-input
-          type="password"
-          nzRequired
-          formControlName="senha"
-          placeholder="Ex. 123"
-          autocomplete="current-password"
-        />
-      </nz-form-control>
+      <input
+        nzPrefixIcon="lock"
+        nz-input
+        type="password"
+        nzRequired
+        formControlName="senha"
+        placeholder="Ex. 123"
+        autocomplete="current-password"
+      />
     </nz-form-item>
 
     <!-- botão de login -->

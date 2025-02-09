@@ -19,6 +19,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { CommonModule } from '@angular/common';
 import { NgxMaskDirective } from 'ngx-mask';
+import { NzResultModule } from 'ng-zorro-antd/result';
 
 @Component({
   standalone: true,
@@ -35,6 +36,7 @@ import { NgxMaskDirective } from 'ngx-mask';
     NzIconModule,
     NzDatePickerModule,
     NzCardModule,
+    NzResultModule,
     NgxMaskDirective,
   ],
 })
@@ -59,9 +61,13 @@ export class UsuarioCreateComponent implements OnInit {
   create(): void {
     this.usuarioService.create(this.usuarioForm.value).subscribe({
       next: (resposta) => {
-        console.log(resposta);
-        this.message.success('Usuário' + resposta.pessoa.nome + ' criado com sucesso!');
-        this.router.navigate(['usuarios/list']);
+        this.router.navigate(['/usuarios/result'], {
+          queryParams: {
+            type: 'success',
+            title: 'Usuário ' + resposta.pessoa.nome + ' criado com sucesso!',
+            message: 'O usuário foi criado com sucesso!'
+          }
+        });
       },
 
       error: (ex) => {
@@ -130,5 +136,9 @@ export class UsuarioCreateComponent implements OnInit {
 
   togglePasswordVisibility(): void {
     this.hide = !this.hide;
+  }
+
+  cancelar(): void {
+    this.router.navigate(['/home']);
   }
 }

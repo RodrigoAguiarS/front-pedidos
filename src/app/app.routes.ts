@@ -8,6 +8,7 @@ import { RoleGuard } from './auth/role.guard';
 import { ACESSO } from './model/Acesso';
 import { UsuarioCreateComponent } from './components/usuario/usuario-create/usuario-create.component';
 import { UsuarioListComponent } from './components/usuario/usuario-list/usuario-list.component';
+import { UsuarioResultComponent } from './components/usuario/usuario-result/usuario-result.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
@@ -31,6 +32,12 @@ export const routes: Routes = [
       {
         path: 'usuarios/list',
         component: UsuarioListComponent,
+        canActivate: [RoleGuard],
+        data: { roles: [ACESSO.ADMINISTRADOR] },
+      },
+      {
+        path: 'usuarios/result',
+        component: UsuarioResultComponent,
         canActivate: [RoleGuard],
         data: { roles: [ACESSO.ADMINISTRADOR] },
       },

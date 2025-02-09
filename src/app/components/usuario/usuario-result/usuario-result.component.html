@@ -1,0 +1,12 @@
+<div class="result-container">
+  <nz-result
+    [nzStatus]="resultType"
+    [nzTitle]="resultTitle"
+    [nzSubTitle]="resultMessage"
+  >
+    <div nz-result-extra>
+      <button nz-button nzType="primary" (click)="navigateToCreate()">Cadastrar Novo Usuário</button>
+      <button nz-button (click)="navigateBack()">Voltar</button>
+    </div>
+  </nz-result>
+</div>

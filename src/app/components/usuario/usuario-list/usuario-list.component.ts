@@ -1,18 +1,18 @@
 import { CPFPipe } from './../../../../pipe';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { UsuarioService } from '../../../services/usuario.service';
+import { PerfilService } from '../../../services/perfil.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { Usuario } from '../../../model/Usuario';
+import { Perfil } from '../../../model/Perfil';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { RouterModule, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { Usuario } from '../../../model/Usuario';
-import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-import { Perfil } from '../../../model/Perfil';
-import { PerfilService } from '../../../services/perfil.service';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-usuario-list',
@@ -27,59 +27,66 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzIconModule,
     NzSelectModule,
     NzPaginationModule,
-    RouterModule,
+    RouterModule
   ],
   templateUrl: './usuario-list.component.html',
-  styleUrl: './usuario-list.component.css',
+  styleUrls: ['./usuario-list.component.css']
 })
-export class UsuarioListComponent {
+export class UsuarioListComponent implements OnInit {
   usuarios: Usuario[] = [];
   perfis: Perfil[] = [];
-  loading: boolean = false;
-  totalElements = 0;
-  pageSize = 10;
-  currentPage = 1;
-  nomeFilter: string = '';
-  cpfFilter: string = '';
-  perfilFilter?: number;
+  carregando = false;
+  totalElementos = 0;
+  itensPorPagina = 10;
+  paginaAtual = 1;
+  filtroForm: FormGroup;
 
   constructor(
+    private readonly fb: FormBuilder,
     private readonly usuarioService: UsuarioService,
     private readonly perfilService: PerfilService,
     private readonly message: NzMessageService,
     private readonly router: Router
-  ) {}
+  ) {
+    this.filtroForm = this.fb.group({
+      nome: [''],
+      cpf: [''],
+      email: [''],
+      perfilId: [null]
+    });
+  }
 
   ngOnInit(): void {
     this.carregarPerfis();
   }
 
-  searchUsuarios(): void {
-    this.currentPage = 1;
+  buscarUsuario(): void {
+    this.paginaAtual = 1;
     this.findAllUsuarios();
   }
 
   findAllUsuarios() {
-    this.loading = true;
+    this.carregando = true;
 
     const params = {
-      page: this.currentPage - 1,
-      size: this.pageSize,
+      page: this.paginaAtual - 1,
+      size: this.itensPorPagina,
       sort: 'email',
-      nome: this.nomeFilter.trim().toLowerCase(),
-      cpf: this.cpfFilter.replace(/\D/g, ''),
-      perfilId: this.perfilFilter,
+      nome: this.filtroForm.get('nome')?.value.trim().toLowerCase(),
+      email: this.filtroForm.get('email')?.value.trim().toLowerCase(),
+      cpf: this.filtroForm.get('cpf')?.value.replace(/\D/g, ''),
+      perfilId: this.filtroForm.get('perfilId')?.value,
     };
 
     this.usuarioService.buscarPaginado(params).subscribe({
       next: (data) => {
         this.usuarios = data.content;
-        this.totalElements = data.totalElements;
-        this.loading = false;
+        this.totalElementos = data.totalElements;
+        this.carregando = false;
       },
       error: (e) => {
         this.message.error('Erro ao buscar usuários');
-        this.loading = false;
+        this.carregando = false;
       },
     });
   }
@@ -96,7 +103,7 @@ export class UsuarioListComponent {
   }
 
   onPageChange(page: number) {
-    this.currentPage = page;
+    this.paginaAtual = page;
     this.findAllUsuarios();
   }
 

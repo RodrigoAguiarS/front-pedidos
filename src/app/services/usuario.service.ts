@@ -25,6 +25,7 @@ export class UsuarioService {
     sort?: string;
     nome?: string;
     cpf?: string;
+    email?: string;
     perfilId?: number;
   }): Observable<{ content: Usuario[]; totalElements: number }> {
 
@@ -40,6 +41,10 @@ export class UsuarioService {
 
     if (params.cpf) {
       url += `&cpf=${encodeURIComponent(params.cpf)}`;
+    }
+
+    if (params.email) {
+      url += `&email=${encodeURIComponent(params.email)}`;
     }
 
     if (params.perfilId) {
